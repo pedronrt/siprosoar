@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block titulo %} Pagina Principal Licencias Urbanisticas {% endblock %}
+
+
+{% block css %}
+	<!-- Estilo (css) de Openlayers -->
+	<link href="{% static 'licencias/css/leaflet.css' %}" rel="stylesheet">
+	<!-- Estilo (css) para el Mapa -->
+	<link href="{% static 'licencias/css/visor.css' %}" rel="stylesheet">
+	<!-- Estilo (css) para el input de busqueda de localizacion -->
+	<link href="{% static 'licencias/css/l.geosearch.css' %}" rel="stylesheet">
+{% endblock %}   
+
+
+{% block javascripts_head %}
+	<!-- Javascripts (js) de Openlayers -->
+	 <script src="{% static 'licencias/js/leaflet.js' %}"></script>
+	<!-- Javascripts (js) de Geosearch  -->
+	 <script src="{% static 'licencias/js/l.control.geosearch.js' %}"></script>
+<!-- Javascripts (js) de Esri  -->
+	 <script src="{% static 'licencias/js/l.geosearch.provider.esri.js' %}"></script>
+{% endblock %}
+
+
+
+{% block content %}
+<div id="map"></div>
+
+<script>
+var map = L.map('map').setView([ 7.0777, -70.7555 ],15);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+    minZoom: 6,
+    maxZoom: 18
+}).addTo(map);
+
+L.control.scale().addTo(map);
+
+
+
+var markers=[];
+    {% for puntos in lista_coordenadas %}
+    var w = parseFloat('{{ puntos.longitud }}'.replace(',','.'));
+    var n = parseFloat('{{ puntos.latitud }}'.replace(',','.'));
+    var nombre = ('{{ puntos.proyecto }}');
+    markers.push(
+    {
+    "lat": n,
+    "lng": w,
+    "name": nombre
+    }
+    );
+    {% endfor %}
+    
+
+var customOptions =
+    {
+    'maxWidth': '400',
+    'width': '200',
+    'className' : 'popupCustom'
+    }
+
+for (var i = 0; i < markers.length; i++) {
+			marker = new L.marker([markers[i]["lat"],markers[i]["lng"]])
+				.bindPopup("Proyecto</br>" + markers[i]['name'] )
+				.addTo(map);
+		}
+
+new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Esri()
+        }).addTo(map);
+
+L.control.mousePosition().addTo(map);
+
+
+ </script>
+
+{% endblock %}
+
+
+
+
+{% block javascripts_body %}
+
+{% endblock %}
