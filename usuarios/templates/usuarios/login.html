@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content-header %}
+<section class="content-header">
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Inicio </a></li>
+    <li class="active">login</li>
+  </ol>
+</section>
+{% endblock %}
+
+
+{% block content %}
+<div class='row'>
+  <div class='col-sm-6 col-sm-offset-3'>
+    <h2 class='text-align-center'><strong>Iniciar Sesión</strong></h2>
+    <form method="post" action=".">
+      {% csrf_token %}
+      {{ form|crispy }}
+
+      <input class='btn btn-block btn-primary' type="submit" value="{% trans 'Iniciar sesion' %}" />
+      <input type="hidden" name="next" value="{{ next }}" />
+
+    </form>
+  </div>
+</div>
+</hr>
+
+<div class='row'>
+  <div class='col-sm-6 col-sm-offset-3'>
+    <br/>
+    <p>{% trans "Has olvidado tu contraseña" %}? <a href="#">{% trans "Restablecer" %}</a>!</p>
+    <p>{% trans "No tienes cuenta" %}? <a href="#">{% trans "Registrarte" %}</a>!</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
+{% endblock %}
+
+</div>

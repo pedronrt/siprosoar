@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<ul class="sidebar-menu">
+    <li class="header">Menu</li>
+
+    {%  if user.is_authenticated %}
+    <li class="active treeview">
+        <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Configuracion</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Usuario </a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Roles </a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Permisos </a></li>
+        </ul>
+    </li>
+    {% endif %}
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-pie-chart"></i>
+            <span>Planeacion</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{% url 'licencias:index' %}"><i class="fa fa-circle-o"></i> Licencias Urbanisticas</a></li>
+        </ul>
+    </li>
+</ul>

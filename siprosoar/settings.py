@@ -27,17 +27,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-EMAIL_HOST= 'smtp.gmail.com'
-EMAIL_HOST_USER = 'pedronrt@gmail.com'
-EMAIL_HOST_PASSWORD = 'Pedro240478@'
-EMAIL_HOST_PORT = 587
-EMAIL_USE_TLS = True
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'licencias.apps.LicenciasConfig',
+    'usuarios.apps.UsuariosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+
 ]
 
 MIDDLEWARE = [
@@ -142,6 +140,17 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_env", "media_root")
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+from django.core.urlresolvers import reverse_lazy
+LOGIN_REDIRECT_URL = reverse_lazy ('usuarios:index')
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST= 'smtp.gmail.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'pedronrt@gmail.com'
+EMAIL_HOST_PASSWORD = 'Pedro240478@'
+EMAIL_BACKEND = 'django.core.mail.backend.smtp.EmailBackend'
 
 
 
